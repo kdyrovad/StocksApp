@@ -9,6 +9,7 @@ import UIKit
 
 final class StocksViewController: UIViewController {
     
+    private var stocks: [Stock] = []
     static var isColor: Bool = true
     
     private lazy var tableView: UITableView = {
@@ -18,15 +19,26 @@ final class StocksViewController: UIViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        title = "Stocks"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpSubviews()
+        getStocks()
         view.backgroundColor = .white
+//        title = "Stocks"
+//        navigationItem.largeTitleDisplayMode = .always
+//        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.dataSource = self
         tableView.delegate = self
-        
+        tableView.allowsSelection = true
     }
     
     private func setUpSubviews() {
@@ -39,6 +51,25 @@ final class StocksViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    private func getStocks() {
+        let client = Network()
+        let service: StocksServiceProtocol = StocksService(client: client)
+        
+        service.getStocks { [weak self] result in
+            switch result {
+            case .success(let stocks):
+                self?.stocks = stocks
+                self?.tableView.reloadData()
+            case .failure(let error):
+                self?.showError(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    private func showError(_ message: String) {
+        //
+    }
 
 }
 
@@ -49,20 +80,17 @@ extension StocksViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as! StockCell
-        
-        
-//        cell.backgroundColor = indexPath.row % 2 == 0 ? .blue : .red
         cell.backgroundColor = StocksViewController.isColor ? UIColor(hexString: "#F0F4F7") : .white
-        
         cell.layer.cornerRadius = 12
-        
         StocksViewController.isColor.toggle()
+        
+        cell.configure(with: stocks[indexPath.section])
         
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return stocks.count
     }
 
 }
@@ -76,7 +104,16 @@ extension StocksViewController: UITableViewDelegate {
     }
      
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        return 8
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailVC()
+        vc.price = "\(stocks[indexPath.section].price.stringWithoutZeroFraction) ₽"
+        vc.change = String(stocks[indexPath.section].change).range(of: "-") != nil ? "\(String(format:"%.2f", stocks[indexPath.section].change)) ₽ (\(String(format:"%.2f", stocks[indexPath.section].changePercentage)))%" : "+\(stocks[indexPath.section].change.stringWithoutZeroFraction) ₽ (\(stocks[indexPath.section].changePercentage.stringWithoutZeroFraction))%"
+        vc.bigTitle = stocks[indexPath.section].name
+        vc.littleTitle = stocks[indexPath.section].symbol
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -106,4 +143,22 @@ extension UIColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 }
+
+struct Stock: Decodable {
+    let id: String
+    let symbol: String
+    let name: String
+    let image: String
+    let price: Double
+    let change: Double
+    let changePercentage: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case id, symbol, name, image
+        case price = "current_price"
+        case change = "price_change_24h"
+        case changePercentage = "price_change_percentage_24h"
+    }
+}
+
 
