@@ -15,11 +15,28 @@ final class Main {
         Network()
     }()
     
+    let favoritesService: FavoritesServiceProtocol = FavoritesLocalService()
+    
     static let shared: Main = .init()
-//    }
+    
+    func networkService() -> NetworkService {
+        network
+    }
+    
+    func stocksService() -> StocksServiceProtocol {
+        StocksService(client: network)
+    }
+    
+    func stocksVC() -> UIViewController {
+        let presneter = StocksPresenter(service: stocksService())
+        let view = StocksViewController(presenter: presneter)
+        presneter.view = view
+        
+        return view
+    }
     
     func secondVC() -> UIViewController {
-        UIViewController()
+        FavoritesVC()
     }
     
     func thirdVC() -> UIViewController {
@@ -29,11 +46,12 @@ final class Main {
     func tabbarController() -> UIViewController {
         let tabbar = UITabBarController()
         
-        let stocksVC = UINavigationController(rootViewController: StocksViewController())
+        let stocksVC = UINavigationController(rootViewController: self.stocksVC())
         stocksVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "diagram"), tag: 0)
+        stocksVC.tabBarItem.title = ""
         
         let secondVC = secondVC()
-        secondVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "fav"), tag: 2)
+        secondVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "fav"), tag: 1)
         
         let thirdVC = thirdVC()
         thirdVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "search"), tag: 2)

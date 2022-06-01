@@ -1,25 +1,13 @@
 //
-//  StocksViewController.swift
+//  FavoritesVC.swift
 //  StocksApp
 //
-//  Created by Dilyara on 29.05.2022.
+//  Created by Dilyara on 01.06.2022.
 //
 
 import UIKit
 
-final class StocksViewController: UIViewController {
-    
-    private let presenter: StocksPresenterProtocol
-    
-    init(presenter: StocksPresenterProtocol) {
-        self.presenter = presenter
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+final class FavoritesVC: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -31,30 +19,27 @@ final class StocksViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "Stocks"
-        print("WILL APPEAR")
-        updateView()
+        self.navigationItem.title = "Favourite"
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateView()
+        navigationController?.navigationBar.isHidden = false
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsSelection = true
         setUpView()
         setUpSubviews()
-        
-        presenter.loadView()
     }
     
     private func setUpView() {
         view.backgroundColor = .white
-        navigationItem.title = "Stocks"
-        //title = "Stocks"
+        navigationItem.title = "Favourite"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        print("SETUPVIEW")
     }
     
     private func setUpSubviews() {
@@ -65,24 +50,10 @@ final class StocksViewController: UIViewController {
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-
+    
 }
 
-extension StocksViewController: StocksViewProtocol {
-    func updateView() {
-        tableView.reloadData()
-    }
-    
-    func updateView(withLoader isLoading: Bool) {
-        print("Loader is - stocks ", isLoading, " at ", Date())
-    }
-    
-    func updateView(withError message: String) {
-        print("Error - ", message)
-    }
-}
-
-extension StocksViewController: UITableViewDataSource {
+extension FavoritesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -93,18 +64,19 @@ extension StocksViewController: UITableViewDataSource {
         cell.layer.cornerRadius = 12
         cell.selectionStyle = .none
         
-        cell.configure(with: presenter.model(for: indexPath))
+        //cell.configure(with: presenter.model(for: indexPath))
         
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter.itemsCount
+        10
+        //return presenter.itemsCount
     }
 
 }
 
-extension StocksViewController: UITableViewDelegate {
+extension FavoritesVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -121,11 +93,12 @@ extension StocksViewController: UITableViewDelegate {
         let vc = DetailVC(presenter: presneter)
         presneter.view = vc
         
-        vc.price = presenter.model(for: indexPath).price
-        vc.change = presenter.model(for: indexPath).change
-        vc.bigTitle = presenter.model(for: indexPath).name
-        vc.littleTitle = presenter.model(for: indexPath).symbol
-        vc.isFav = presenter.model(for: indexPath).isFav
+//        vc.price = presenter.model(for: indexPath).price
+//        vc.change = presenter.model(for: indexPath).change
+//        vc.bigTitle = presenter.model(for: indexPath).name
+//        vc.littleTitle = presenter.model(for: indexPath).symbol
+//        vc.isFav = presenter.model(for: indexPath).isFav
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+

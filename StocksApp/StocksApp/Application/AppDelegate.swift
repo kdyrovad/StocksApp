@@ -20,5 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    private func stocksVC() -> UIViewController {
+        let client = Network()
+        let service = StocksService(client: client)
+        let presenter = StocksPresenter(service: service)
+        let view = StocksViewController(presenter: presenter)
+        presenter.view = view
+        
+        return view
+    }
 }
 

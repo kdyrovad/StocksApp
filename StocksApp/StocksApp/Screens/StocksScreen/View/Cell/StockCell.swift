@@ -9,6 +9,8 @@ import UIKit
 
 final class StockCell: UITableViewCell {
     
+    private var favoriteAction: (() -> Void)?
+    
     //MARK: - Views
     
     private lazy var iconView: UIImageView = {
@@ -23,8 +25,8 @@ final class StockCell: UITableViewCell {
     
     private lazy var symbolLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)
         label.text = "YNDX"
-        label.font = .systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -32,7 +34,7 @@ final class StockCell: UITableViewCell {
     private lazy var companyLabel: UILabel = {
         let label = UILabel()
         label.text = "Yandex, LLC"
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,7 +42,7 @@ final class StockCell: UITableViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.text = "4 764,6 ₽"
-        label.font = .systemFont(ofSize: 18)
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -48,7 +50,7 @@ final class StockCell: UITableViewCell {
     private lazy var changeLabel: UILabel = {
         let label = UILabel()
         label.text = "+55 ₽ (1,15%)"
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.textColor = UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -57,6 +59,8 @@ final class StockCell: UITableViewCell {
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "favorite-off"), for: .normal)
+        button.setImage(UIImage(named: "favSelected"), for: .selected)
+        button.addTarget(self, action: #selector(favButtonTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -84,14 +88,32 @@ final class StockCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        favoriteAction = nil
+    }
+    
     //MARK: - Methods
     
-    func configure(with stock: Stock) {
-        symbolLabel.text = stock.symbol
-        companyLabel.text = stock.name
-        priceLabel.text = "\(stock.price.stringWithoutZeroFraction) ₽"
-        changeLabel.text = String(stock.change).range(of: "-") != nil ? "\(String(format:"%.2f", stock.change)) ₽ (\(String(format:"%.2f", stock.changePercentage)))%" : "+\(stock.change.stringWithoutZeroFraction) ₽ (\(stock.changePercentage.stringWithoutZeroFraction))%"
-        iconView.downloaded(from: stock.image)
+    
+    @objc private func favButtonTap() {
+        favoriteButton.isSelected.toggle()
+        favoriteAction?()
+    }
+    
+    func configure(with model: StockModelProtocol) {
+        symbolLabel.text = model.symbol.uppercased()
+        companyLabel.text = model.name
+        priceLabel.text = model.price
+        changeLabel.text = model.change
+        changeLabel.textColor = model.changeColor
+        iconView.downloaded(from: model.iconURL)
+        favoriteButton.isSelected = model.isFav
+        
+        favoriteAction = {
+            model.setFavorite()
+        }
         
     }
     
@@ -108,8 +130,7 @@ final class StockCell: UITableViewCell {
         
         titleContainerView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12).isActive = true
         titleContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
-        titleContainerView.trailingAnchor.constraint(lessThanOrEqualTo: priceContainerView.leadingAnchor,
-                                                     constant: -20).isActive = true
+        titleContainerView.trailingAnchor.constraint(lessThanOrEqualTo: priceContainerView.leadingAnchor, constant: -20).isActive = true
         
         priceContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
         priceContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
@@ -152,13 +173,6 @@ final class StockCell: UITableViewCell {
         changeLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor).isActive = true
     }
     
-}
-
-
-extension Double {
-    var stringWithoutZeroFraction: String {
-        return truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(format: "%.2f", self)
-    }
 }
 
 extension UIImageView {
