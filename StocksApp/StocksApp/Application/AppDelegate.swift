@@ -15,10 +15,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = StocksViewController()
+        window?.rootViewController = Main.shared.tabbarController()
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    private func stocksVC() -> UIViewController {
+        let client = Network()
+        let service = StocksService(client: client)
+        let presenter = StocksPresenter(service: service)
+        let view = StocksViewController(presenter: presenter)
+        presenter.view = view
+        
+        return view
     }
 }
 
