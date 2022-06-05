@@ -15,7 +15,6 @@ final class StockCell: UITableViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .blue
         image.image = UIImage(named: "Logo")
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
@@ -87,8 +86,16 @@ final class StockCell: UITableViewCell {
     
     //MARK: - Methods
     
+    func configure(with stock: Stock) {
+        symbolLabel.text = stock.symbol
+        companyLabel.text = stock.name
+        priceLabel.text = "\(stock.price.stringWithoutZeroFraction) ₽"
+        changeLabel.text = String(stock.change).range(of: "-") != nil ? "\(String(format:"%.2f", stock.change)) ₽ (\(String(format:"%.2f", stock.changePercentage)))%" : "+\(stock.change.stringWithoutZeroFraction) ₽ (\(stock.changePercentage.stringWithoutZeroFraction))%"
+        iconView.downloaded(from: stock.image)
+        
+    }
+    
     private func setupContentView() {
-//        contentView.backgroundColor = .gray
         contentView.addSubview(iconView)
         contentView.addSubview(titleContainerView)
         contentView.addSubview(priceContainerView)
@@ -145,4 +152,32 @@ final class StockCell: UITableViewCell {
         changeLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor).isActive = true
     }
     
+}
+
+
+extension Double {
+    var stringWithoutZeroFraction: String {
+        return truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(format: "%.2f", self)
+    }
+}
+
+extension UIImageView {
+    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
+            }
+        }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
+    }
 }
