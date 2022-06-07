@@ -60,5 +60,13 @@ final class Main {
         
         return tabbar
     }
+    
+    func detailVC(for model: StockModelProtocol) -> UIViewController {
+        let presenter = DetailPresenter(service: stocksService(), model: model)
+        let detailVC = DetailVC(presenter: presenter)
+        presenter.view = detailVC
+            
+        return detailVC
+    }
 }
 

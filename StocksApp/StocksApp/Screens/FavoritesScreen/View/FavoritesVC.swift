@@ -14,12 +14,17 @@ final class FavoritesVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StockCell.self, forCellReuseIdentifier: StockCell.typeName)
         tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = true
         return tableView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Favourite"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidLoad() {
@@ -27,28 +32,24 @@ final class FavoritesVC: UIViewController {
         
         navigationController?.navigationBar.isHidden = false
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.allowsSelection = true
         setUpView()
         setUpSubviews()
     }
     
     private func setUpView() {
         view.backgroundColor = .white
-        navigationItem.title = "Favourite"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
-        print("SETUPVIEW")
     }
     
     private func setUpSubviews() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
 }
@@ -71,7 +72,6 @@ extension FavoritesVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         10
-        //return presenter.itemsCount
     }
 
 }
@@ -86,19 +86,6 @@ extension FavoritesVC: UITableViewDelegate {
      
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 8
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let presneter = DetailPresenter(service: StocksService(client: Network()))
-        let vc = DetailVC(presenter: presneter)
-        presneter.view = vc
-        
-//        vc.price = presenter.model(for: indexPath).price
-//        vc.change = presenter.model(for: indexPath).change
-//        vc.bigTitle = presenter.model(for: indexPath).name
-//        vc.littleTitle = presenter.model(for: indexPath).symbol
-//        vc.isFav = presenter.model(for: indexPath).isFav
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

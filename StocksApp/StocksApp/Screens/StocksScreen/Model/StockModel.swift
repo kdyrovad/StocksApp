@@ -61,7 +61,6 @@ final class StockModel: StockModelProtocol {
         stock.change >= 0 ? UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1) : UIColor(red: 178/255, green: 36/255, blue: 93/255, alpha: 1)
     }
     
-    
     var isFav: Bool = false
     
     func setFavorite() {

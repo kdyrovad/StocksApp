@@ -26,13 +26,15 @@ final class StocksViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StockCell.self, forCellReuseIdentifier: StockCell.typeName)
         tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = true
         return tableView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Stocks"
-        print("WILL APPEAR")
         updateView()
     }
 
@@ -40,9 +42,6 @@ final class StocksViewController: UIViewController {
         super.viewDidLoad()
         
         updateView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.allowsSelection = true
         setUpView()
         setUpSubviews()
         
@@ -52,7 +51,6 @@ final class StocksViewController: UIViewController {
     private func setUpView() {
         view.backgroundColor = .white
         navigationItem.title = "Stocks"
-        //title = "Stocks"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -60,12 +58,13 @@ final class StocksViewController: UIViewController {
     private func setUpSubviews() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
-
 }
 
 extension StocksViewController: StocksViewProtocol {
@@ -99,7 +98,7 @@ extension StocksViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter.itemsCount
+        presenter.itemsCount
     }
 
 }
@@ -117,15 +116,9 @@ extension StocksViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let presneter = DetailPresenter(service: StocksService(client: Network()))
-        let vc = DetailVC(presenter: presneter)
-        presneter.view = vc
         
-        vc.price = presenter.model(for: indexPath).price
-        vc.change = presenter.model(for: indexPath).change
-        vc.bigTitle = presenter.model(for: indexPath).name
-        vc.littleTitle = presenter.model(for: indexPath).symbol
-        vc.isFav = presenter.model(for: indexPath).isFav
+        let model = presenter.model(for: indexPath)
+        let vc = Main.shared.detailVC(for: model)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

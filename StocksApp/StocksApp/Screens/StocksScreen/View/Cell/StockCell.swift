@@ -17,7 +17,6 @@ final class StockCell: UITableViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "Logo")
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
         return image
@@ -26,14 +25,12 @@ final class StockCell: UITableViewCell {
     private lazy var symbolLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Bold", size: 18)
-        label.text = "YNDX"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var companyLabel: UILabel = {
         let label = UILabel()
-        label.text = "Yandex, LLC"
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -41,7 +38,6 @@ final class StockCell: UITableViewCell {
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "4 764,6 ₽"
         label.font = UIFont(name: "Montserrat-Bold", size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -49,7 +45,6 @@ final class StockCell: UITableViewCell {
     
     private lazy var changeLabel: UILabel = {
         let label = UILabel()
-        label.text = "+55 ₽ (1,15%)"
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.textColor = UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -122,18 +117,20 @@ final class StockCell: UITableViewCell {
         contentView.addSubview(titleContainerView)
         contentView.addSubview(priceContainerView)
         
-        iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
-        iconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
-        iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
-        iconView.heightAnchor.constraint(equalToConstant: 52).isActive = true
-        iconView.widthAnchor.constraint(equalToConstant: 52).isActive = true
-        
-        titleContainerView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12).isActive = true
-        titleContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
-        titleContainerView.trailingAnchor.constraint(lessThanOrEqualTo: priceContainerView.leadingAnchor, constant: -20).isActive = true
-        
-        priceContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
-        priceContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            iconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            iconView.heightAnchor.constraint(equalToConstant: 52),
+            iconView.widthAnchor.constraint(equalToConstant: 52),
+            
+            titleContainerView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
+            titleContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor),
+            titleContainerView.trailingAnchor.constraint(lessThanOrEqualTo: priceContainerView.leadingAnchor, constant: -20),
+            
+            priceContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            priceContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor)
+        ])
         
         setupTitleContainerView()
         setupPriceContainerView()
@@ -144,54 +141,37 @@ final class StockCell: UITableViewCell {
         titleContainerView.addSubview(companyLabel)
         titleContainerView.addSubview(favoriteButton)
         
-        symbolLabel.leadingAnchor.constraint(equalTo: titleContainerView.leadingAnchor).isActive = true
-        symbolLabel.topAnchor.constraint(equalTo: titleContainerView.topAnchor).isActive = true
-        
-        favoriteButton.leadingAnchor.constraint(equalTo: symbolLabel.trailingAnchor, constant: 6).isActive = true
-        favoriteButton.centerYAnchor.constraint(equalTo: symbolLabel.centerYAnchor).isActive = true
-        favoriteButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        favoriteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        favoriteButton.trailingAnchor.constraint(lessThanOrEqualTo: titleContainerView.trailingAnchor).isActive = true
-        
-        companyLabel.leadingAnchor.constraint(equalTo: symbolLabel.leadingAnchor).isActive = true
-        companyLabel.topAnchor.constraint(equalTo: symbolLabel.bottomAnchor).isActive = true
-        companyLabel.bottomAnchor.constraint(equalTo: titleContainerView.bottomAnchor).isActive = true
-        companyLabel.trailingAnchor.constraint(equalTo: titleContainerView.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            symbolLabel.leadingAnchor.constraint(equalTo: titleContainerView.leadingAnchor),
+            symbolLabel.topAnchor.constraint(equalTo: titleContainerView.topAnchor),
+            
+            favoriteButton.leadingAnchor.constraint(equalTo: symbolLabel.trailingAnchor, constant: 6),
+            favoriteButton.centerYAnchor.constraint(equalTo: symbolLabel.centerYAnchor),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 16),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 16),
+            favoriteButton.trailingAnchor.constraint(lessThanOrEqualTo: titleContainerView.trailingAnchor),
+            
+            companyLabel.leadingAnchor.constraint(equalTo: symbolLabel.leadingAnchor),
+            companyLabel.topAnchor.constraint(equalTo: symbolLabel.bottomAnchor),
+            companyLabel.bottomAnchor.constraint(equalTo: titleContainerView.bottomAnchor),
+            companyLabel.trailingAnchor.constraint(equalTo: titleContainerView.trailingAnchor)
+        ])
     }
     
     private func setupPriceContainerView() {
         priceContainerView.addSubview(priceLabel)
         priceContainerView.addSubview(changeLabel)
-
-        priceLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor).isActive = true
-        priceLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor).isActive = true
-        priceLabel.topAnchor.constraint(equalTo: priceContainerView.topAnchor).isActive = true
         
-        changeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor).isActive = true
-        changeLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor).isActive = true
-        changeLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor).isActive = true
-        changeLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            priceLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor),
+            priceLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor),
+            priceLabel.topAnchor.constraint(equalTo: priceContainerView.topAnchor),
+            
+            changeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor),
+            changeLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor),
+            changeLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor),
+            changeLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor)
+        ])
     }
     
-}
-
-extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
-    }
 }

@@ -15,18 +15,24 @@ protocol DetailViewProtocol: AnyObject {
 
 protocol DetailPresenterProtocol {
     var view: DetailViewProtocol? { get set }
+    var price: String? { get }
+    var bigTitle: String? { get }
+    var littleTitle: String? { get }
+    var change: String? { get }
+    var favoriteButtonIsClicked: Bool { get }
     
     func loadView()
+    func favoriteButtonTapped()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
     
     private let service: StocksServiceProtocol
+    private let model: StockModelProtocol
     
-    //private var stocks: [StockModelProtocol] = []
-    
-    init(service: StocksServiceProtocol) {
+    init(service: StocksServiceProtocol, model: StockModelProtocol) {
         self.service = service
+        self.model = model
     }
     
     weak var view: DetailViewProtocol?
@@ -42,6 +48,30 @@ final class DetailPresenter: DetailPresenterProtocol {
                 self?.view?.updateView(withError: error.localizedDescription)
             }
         }
+    }
+    
+    var price: String? {
+        return model.price
+    }
+        
+    var bigTitle: String? {
+        return model.name
+    }
+    
+    var littleTitle: String? {
+        return model.symbol
+    }
+        
+    var change: String? {
+        return model.change
+    }
+    
+    var favoriteButtonIsClicked: Bool {
+        return model.isFav
+    }
+    
+    func favoriteButtonTapped() {
+        model.setFavorite()
     }
 }
 
