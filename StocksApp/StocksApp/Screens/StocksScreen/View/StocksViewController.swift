@@ -26,33 +26,30 @@ final class StocksViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StockCell.self, forCellReuseIdentifier: StockCell.typeName)
         tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = true
         return tableView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Stocks"
-        print("WILL APPEAR")
-        updateView()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.allowsSelection = true
         setUpView()
         setUpSubviews()
         
         presenter.loadView()
+        print(presenter.itemsCount)
     }
     
     private func setUpView() {
         view.backgroundColor = .white
         navigationItem.title = "Stocks"
-        //title = "Stocks"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -73,6 +70,10 @@ extension StocksViewController: StocksViewProtocol {
         tableView.reloadData()
     }
     
+    func updateCell(for indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
     func updateView(withLoader isLoading: Bool) {
         print("Loader is - stocks ", isLoading, " at ", Date())
     }
@@ -88,11 +89,13 @@ extension StocksViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as! StockCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as? StockCell else {
+            return UITableViewCell()
+        }
         cell.backgroundColor = (indexPath.section % 2 == 0) ? UIColor(hexString: "#F0F4F7") : .white
-        cell.layer.cornerRadius = 12
+        cell.layer.cornerRadius = 16
         cell.selectionStyle = .none
-        
+        print(presenter.itemsCount)
         cell.configure(with: presenter.model(for: indexPath))
         
         return cell
@@ -101,7 +104,10 @@ extension StocksViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return presenter.itemsCount
     }
-
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        68
+    }
 }
 
 extension StocksViewController: UITableViewDelegate {
@@ -117,15 +123,9 @@ extension StocksViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let presneter = DetailPresenter(service: StocksService(client: Network()))
-        let vc = DetailVC(presenter: presneter)
-        presneter.view = vc
-        
-        vc.price = presenter.model(for: indexPath).price
-        vc.change = presenter.model(for: indexPath).change
-        vc.bigTitle = presenter.model(for: indexPath).name
-        vc.littleTitle = presenter.model(for: indexPath).symbol
-        vc.isFav = presenter.model(for: indexPath).isFav
+        let model = presenter.model(for: indexPath)
+        let vc = Main.shared.detailVC(for: model)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+

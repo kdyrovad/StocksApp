@@ -10,7 +10,6 @@ import UIKit
 final class DetailVC: UIViewController {
     
     private let presenter: DetailPresenterProtocol
-    //private var favoriteAction: (() -> Void)?
     
     init(presenter: DetailPresenterProtocol) {
         self.presenter = presenter
@@ -22,15 +21,15 @@ final class DetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var bigTitle: String = ""
-    var littleTitle: String = ""
-    var price: String = ""
-    var change: String = ""
-    var isFav: Bool = false
+//    var bigTitle: String = ""
+//    var littleTitle: String = ""
+//    var price: String = ""
+//    var change: String = ""
+//    var isFav: Bool = false
     
     private lazy var symbolLabel: UILabel = {
         let label = UILabel()
-        label.text = bigTitle
+        label.text = presenter.bigTitle
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -38,7 +37,7 @@ final class DetailVC: UIViewController {
     
     private lazy var companyLabel: UILabel = {
         let label = UILabel()
-        label.text = littleTitle
+        label.text = presenter.littleTitle
         label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -47,7 +46,7 @@ final class DetailVC: UIViewController {
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(price)"
+        label.text = presenter.price
         label.font = UIFont.boldSystemFont(ofSize: 28)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -55,7 +54,7 @@ final class DetailVC: UIViewController {
     
     private lazy var changeLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(change)"
+        label.text = presenter.change
         label.font = .systemFont(ofSize: 12)
         label.textColor = UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -79,7 +78,7 @@ final class DetailVC: UIViewController {
         button.setImage(UIImage(named: "favDetail"), for: .normal)
         button.setImage(UIImage(named: "favSelected"), for: .selected)
         button.addTarget(self, action: #selector(favButtonTap), for: .touchUpInside)
-        button.isSelected = isFav
+        button.isSelected = presenter.favoriteButtonIsClicked
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -128,17 +127,16 @@ final class DetailVC: UIViewController {
         chartView.heightAnchor.constraint(equalToConstant: 260).isActive = true
     }
     
-    @objc private func favButtonTap() {
-        if isFav {
-            Main.shared.favoritesService.delete(id: bigTitle.lowercased())
-        } else {
-            Main.shared.favoritesService.save(id: bigTitle.lowercased())
-        }
-        //Main.shared.favoritesService.save(id: "bitcoin")
-//        print("CLICKEEEEED")
-//        print(bigTitle.lowercased())
-        favoriteButton.isSelected.toggle()
-        isFav.toggle()
+    @objc private func favButtonTap(sender: UIButton) {
+//        if isFav {
+//            Main.shared.favoritesService.delete(id: bigTitle.lowercased())
+//        } else {
+//            Main.shared.favoritesService.save(id: bigTitle.lowercased())
+//        }
+//        favoriteButton.isSelected.toggle()
+//        isFav.toggle()
+        sender.isSelected.toggle()
+        presenter.favoriteButtonTapped()
     }
 }
 
@@ -157,3 +155,4 @@ extension DetailVC: DetailViewProtocol {
     
     
 }
+

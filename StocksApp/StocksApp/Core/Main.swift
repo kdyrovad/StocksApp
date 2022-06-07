@@ -36,7 +36,11 @@ final class Main {
     }
     
     func secondVC() -> UIViewController {
-        FavoritesVC()
+        let presenter = StocksPresenter(service: stocksService())
+        let view = FavoritesVC(presenter: presenter)
+        presenter.view = view as StocksViewProtocol
+        
+        return view
     }
     
     func thirdVC() -> UIViewController {
@@ -48,9 +52,9 @@ final class Main {
         
         let stocksVC = UINavigationController(rootViewController: self.stocksVC())
         stocksVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "diagram"), tag: 0)
-        stocksVC.tabBarItem.title = ""
+        //stocksVC.tabBarItem.title = ""
         
-        let secondVC = secondVC()
+        let secondVC = UINavigationController(rootViewController: self.secondVC())
         secondVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "fav"), tag: 1)
         
         let thirdVC = thirdVC()
@@ -60,5 +64,12 @@ final class Main {
         
         return tabbar
     }
+    
+    func detailVC(for model: StockModelProtocol) -> UIViewController {
+        let presenter = DetailPresenter(service: stocksService(), model: model)
+        let detailVC = DetailVC(presenter: presenter)
+        presenter.view = detailVC
+        
+        return detailVC
+    }
 }
-

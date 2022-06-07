@@ -30,6 +30,8 @@
 		004ACDA12846B9720054203D /* DetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA02846B9720054203D /* DetailResponse.swift */; };
 		004ACDA42846DC490054203D /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA32846DC490054203D /* FavoritesService.swift */; };
 		004ACDA82846F6800054203D /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA72846F6800054203D /* FavoritesVC.swift */; };
+		004ACDAF284D57520054203D /* FavoritesUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDAE284D57520054203D /* FavoritesUpdateService.swift */; };
+		004ACDB2284D57EE0054203D /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDB1284D57EE0054203D /* FavoritesPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		004ACDA02846B9720054203D /* DetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResponse.swift; sourceTree = "<group>"; };
 		004ACDA32846DC490054203D /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		004ACDA72846F6800054203D /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
+		004ACDAE284D57520054203D /* FavoritesUpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesUpdateService.swift; sourceTree = "<group>"; };
+		004ACDB1284D57EE0054203D /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				004ACDA32846DC490054203D /* FavoritesService.swift */,
+				004ACDAE284D57520054203D /* FavoritesUpdateService.swift */,
 			);
 			path = FavoritesService;
 			sourceTree = "<group>";
@@ -273,6 +278,7 @@
 		004ACDA52846F66B0054203D /* FavoritesScreen */ = {
 			isa = PBXGroup;
 			children = (
+				004ACDB0284D57E10054203D /* Presenter */,
 				004ACDA62846F6770054203D /* View */,
 			);
 			path = FavoritesScreen;
@@ -284,6 +290,14 @@
 				004ACDA72846F6800054203D /* FavoritesVC.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		004ACDB0284D57E10054203D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDB1284D57EE0054203D /* FavoritesPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,6 +377,7 @@
 				004ACD95284586990054203D /* StockModel.swift in Sources */,
 				004ACD7128442BDB0054203D /* Router.swift in Sources */,
 				004ACD4F2842C6FD0054203D /* StocksViewController.swift in Sources */,
+				004ACDAF284D57520054203D /* FavoritesUpdateService.swift in Sources */,
 				004ACD4B2842C6FD0054203D /* AppDelegate.swift in Sources */,
 				004ACD93284586200054203D /* StocksRouter.swift in Sources */,
 				004ACD5F2842D0A10054203D /* StockCell.swift in Sources */,
@@ -376,6 +391,7 @@
 				004ACD7528442E640054203D /* HttpMethod.swift in Sources */,
 				004ACD7C284433F70054203D /* NetworkService.swift in Sources */,
 				004ACD7328442E030054203D /* NetworkError.swift in Sources */,
+				004ACDB2284D57EE0054203D /* FavoritesPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

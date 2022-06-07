@@ -9,6 +9,18 @@ import UIKit
 
 final class FavoritesVC: UIViewController {
     
+    private let presenter: StocksPresenterProtocol
+    
+    init(presenter: StocksPresenterProtocol) {
+        self.presenter = presenter
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,10 +32,13 @@ final class FavoritesVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Favourite"
+        updateView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        updateView()
         
         navigationController?.navigationBar.isHidden = false
         
@@ -32,6 +47,8 @@ final class FavoritesVC: UIViewController {
         tableView.allowsSelection = true
         setUpView()
         setUpSubviews()
+        
+        //presenter.loadView()
     }
     
     private func setUpView() {
@@ -50,7 +67,6 @@ final class FavoritesVC: UIViewController {
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
 }
 
 extension FavoritesVC: UITableViewDataSource {
@@ -64,16 +80,33 @@ extension FavoritesVC: UITableViewDataSource {
         cell.layer.cornerRadius = 12
         cell.selectionStyle = .none
         
-        //cell.configure(with: presenter.model(for: indexPath))
+        cell.configure(with: presenter.modelForFavorites(for: indexPath))
         
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        10
-        //return presenter.itemsCount
+        return presenter.favoriteItemsCount
     }
+}
 
+extension FavoritesVC: StocksViewProtocol {
+    func updateView() {
+        //presenter.updateStocksArray()
+        tableView.reloadData()
+    }
+    
+    func updateCell(for indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func updateView(withLoader isLoading: Bool) {
+        print("Loader is - stocks ", isLoading, " at ", Date())
+    }
+    
+    func updateView(withError message: String) {
+        print("Error - ", message)
+    }
 }
 
 extension FavoritesVC: UITableViewDelegate {
@@ -86,19 +119,6 @@ extension FavoritesVC: UITableViewDelegate {
      
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 8
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let presneter = DetailPresenter(service: StocksService(client: Network()))
-        let vc = DetailVC(presenter: presneter)
-        presneter.view = vc
-        
-//        vc.price = presenter.model(for: indexPath).price
-//        vc.change = presenter.model(for: indexPath).change
-//        vc.bigTitle = presenter.model(for: indexPath).name
-//        vc.littleTitle = presenter.model(for: indexPath).symbol
-//        vc.isFav = presenter.model(for: indexPath).isFav
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
