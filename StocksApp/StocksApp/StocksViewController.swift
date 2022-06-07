@@ -48,21 +48,25 @@ extension StocksViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as! StockCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as? StockCell else {
+            return UITableViewCell()
+        }
         
-        
-//        cell.backgroundColor = indexPath.row % 2 == 0 ? .blue : .red
         cell.backgroundColor = StocksViewController.isColor ? UIColor(hexString: "#F0F4F7") : .white
         
-        cell.layer.cornerRadius = 12
+        cell.layer.cornerRadius = 16
         
         StocksViewController.isColor.toggle()
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        68
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        10
     }
 
 }
@@ -76,7 +80,7 @@ extension StocksViewController: UITableViewDelegate {
     }
      
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        return 8
     }
     
 }

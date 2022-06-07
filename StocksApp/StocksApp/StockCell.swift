@@ -50,7 +50,7 @@ final class StockCell: UITableViewCell {
         let label = UILabel()
         label.text = "+55 ₽ (1,15%)"
         label.font = .systemFont(ofSize: 12)
-        label.textColor = UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
+        label.textColor = UIColor.StockCell.changeLabelTextColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -94,8 +94,7 @@ final class StockCell: UITableViewCell {
         contentView.addSubview(priceContainerView)
         
         iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
-        iconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
-        iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
+        iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         iconView.heightAnchor.constraint(equalToConstant: 52).isActive = true
         iconView.widthAnchor.constraint(equalToConstant: 52).isActive = true
         
@@ -144,5 +143,12 @@ final class StockCell: UITableViewCell {
         changeLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor).isActive = true
         changeLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor).isActive = true
     }
-    
+}
+
+extension UIColor {
+    fileprivate enum StockCell {
+        static var changeLabelTextColor: UIColor {
+            UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
+        }
+    }
 }
