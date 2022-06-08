@@ -19,6 +19,17 @@
 		004ACD7E2844399A0054203D /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD7D2844399A0054203D /* Main.swift */; };
 		004ACD802844FE2E0054203D /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD7F2844FE2E0054203D /* DetailVC.swift */; };
 		004ACD82284547790054203D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 004ACD81284547790054203D /* Assets.xcassets */; };
+		004ACD842845655A0054203D /* StocksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD832845655A0054203D /* StocksPresenter.swift */; };
+		004ACD8A284574080054203D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD89284574080054203D /* Extensions.swift */; };
+		004ACD9028457EF40054203D /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 004ACD8E28457EF40054203D /* Montserrat-Bold.ttf */; };
+		004ACD9128457EF40054203D /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 004ACD8F28457EF40054203D /* Montserrat-Regular.ttf */; };
+		004ACD93284586200054203D /* StocksRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD92284586200054203D /* StocksRouter.swift */; };
+		004ACD95284586990054203D /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD94284586990054203D /* StockModel.swift */; };
+		004ACD97284587160054203D /* StocksResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD96284587160054203D /* StocksResponse.swift */; };
+		004ACD9E284651E70054203D /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD9D284651E70054203D /* DetailPresenter.swift */; };
+		004ACDA12846B9720054203D /* DetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA02846B9720054203D /* DetailResponse.swift */; };
+		004ACDA42846DC490054203D /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA32846DC490054203D /* FavoritesService.swift */; };
+		004ACDA82846F6800054203D /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA72846F6800054203D /* FavoritesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +47,17 @@
 		004ACD7D2844399A0054203D /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		004ACD7F2844FE2E0054203D /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		004ACD81284547790054203D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		004ACD832845655A0054203D /* StocksPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksPresenter.swift; sourceTree = "<group>"; };
+		004ACD89284574080054203D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		004ACD8E28457EF40054203D /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		004ACD8F28457EF40054203D /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		004ACD92284586200054203D /* StocksRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksRouter.swift; sourceTree = "<group>"; };
+		004ACD94284586990054203D /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
+		004ACD96284587160054203D /* StocksResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksResponse.swift; sourceTree = "<group>"; };
+		004ACD9D284651E70054203D /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		004ACDA02846B9720054203D /* DetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResponse.swift; sourceTree = "<group>"; };
+		004ACDA32846DC490054203D /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
+		004ACDA72846F6800054203D /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,12 +90,9 @@
 		004ACD492842C6FD0054203D /* StocksApp */ = {
 			isa = PBXGroup;
 			children = (
+				004ACD85284570FC0054203D /* Application */,
+				004ACD87284573A30054203D /* Core */,
 				004ACD68284428AB0054203D /* Screens */,
-				004ACD4A2842C6FD0054203D /* AppDelegate.swift */,
-				004ACD552842C7010054203D /* LaunchScreen.storyboard */,
-				004ACD582842C7010054203D /* Info.plist */,
-				004ACD7D2844399A0054203D /* Main.swift */,
-				004ACD81284547790054203D /* Assets.xcassets */,
 			);
 			path = StocksApp;
 			sourceTree = "<group>";
@@ -81,7 +100,8 @@
 		004ACD68284428AB0054203D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				004ACD6E2844292A0054203D /* Services */,
+				004ACDA52846F66B0054203D /* FavoritesScreen */,
+				004ACD9828459C740054203D /* DetailScreen */,
 				004ACD69284428B90054203D /* StocksScreen */,
 			);
 			path = Screens;
@@ -103,7 +123,6 @@
 			children = (
 				004ACD4E2842C6FD0054203D /* StocksViewController.swift */,
 				004ACD6D284429000054203D /* Cell */,
-				004ACD7F2844FE2E0054203D /* DetailVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -111,6 +130,7 @@
 		004ACD6B284428CF0054203D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				004ACD94284586990054203D /* StockModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -118,6 +138,7 @@
 		004ACD6C284428DD0054203D /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				004ACD832845655A0054203D /* StocksPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -133,6 +154,7 @@
 		004ACD6E2844292A0054203D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				004ACDA22846DC2B0054203D /* FavoritesService */,
 				004ACD6F2844293D0054203D /* NetworkService */,
 			);
 			path = Services;
@@ -152,9 +174,116 @@
 		004ACD78284430E00054203D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				004ACD92284586200054203D /* StocksRouter.swift */,
 				004ACD79284430F90054203D /* StocksService.swift */,
+				004ACD96284587160054203D /* StocksResponse.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		004ACD85284570FC0054203D /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD4A2842C6FD0054203D /* AppDelegate.swift */,
+				004ACD552842C7010054203D /* LaunchScreen.storyboard */,
+				004ACD582842C7010054203D /* Info.plist */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		004ACD86284571360054203D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD81284547790054203D /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		004ACD87284573A30054203D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD7D2844399A0054203D /* Main.swift */,
+				004ACD86284571360054203D /* Resources */,
+				004ACD6E2844292A0054203D /* Services */,
+				004ACD8B28457C480054203D /* Fonts */,
+				004ACD88284573B60054203D /* Extensions */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		004ACD88284573B60054203D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD89284574080054203D /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		004ACD8B28457C480054203D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD8E28457EF40054203D /* Montserrat-Bold.ttf */,
+				004ACD8F28457EF40054203D /* Montserrat-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		004ACD9828459C740054203D /* DetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD9F2846B9610054203D /* Service */,
+				004ACD9A28459C950054203D /* Presenter */,
+				004ACD9928459C850054203D /* View */,
+			);
+			path = DetailScreen;
+			sourceTree = "<group>";
+		};
+		004ACD9928459C850054203D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD7F2844FE2E0054203D /* DetailVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		004ACD9A28459C950054203D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				004ACD9D284651E70054203D /* DetailPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		004ACD9F2846B9610054203D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDA02846B9720054203D /* DetailResponse.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		004ACDA22846DC2B0054203D /* FavoritesService */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDA32846DC490054203D /* FavoritesService.swift */,
+			);
+			path = FavoritesService;
+			sourceTree = "<group>";
+		};
+		004ACDA52846F66B0054203D /* FavoritesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDA62846F6770054203D /* View */,
+			);
+			path = FavoritesScreen;
+			sourceTree = "<group>";
+		};
+		004ACDA62846F6770054203D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDA72846F6800054203D /* FavoritesVC.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,8 +343,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004ACD9128457EF40054203D /* Montserrat-Regular.ttf in Resources */,
 				004ACD82284547790054203D /* Assets.xcassets in Resources */,
 				004ACD572842C7010054203D /* LaunchScreen.storyboard in Resources */,
+				004ACD9028457EF40054203D /* Montserrat-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,13 +357,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004ACDA82846F6800054203D /* FavoritesVC.swift in Sources */,
 				004ACD7E2844399A0054203D /* Main.swift in Sources */,
+				004ACD842845655A0054203D /* StocksPresenter.swift in Sources */,
+				004ACD95284586990054203D /* StockModel.swift in Sources */,
 				004ACD7128442BDB0054203D /* Router.swift in Sources */,
 				004ACD4F2842C6FD0054203D /* StocksViewController.swift in Sources */,
 				004ACD4B2842C6FD0054203D /* AppDelegate.swift in Sources */,
+				004ACD93284586200054203D /* StocksRouter.swift in Sources */,
 				004ACD5F2842D0A10054203D /* StockCell.swift in Sources */,
+				004ACDA12846B9720054203D /* DetailResponse.swift in Sources */,
+				004ACDA42846DC490054203D /* FavoritesService.swift in Sources */,
 				004ACD802844FE2E0054203D /* DetailVC.swift in Sources */,
+				004ACD8A284574080054203D /* Extensions.swift in Sources */,
 				004ACD7A284430F90054203D /* StocksService.swift in Sources */,
+				004ACD9E284651E70054203D /* DetailPresenter.swift in Sources */,
+				004ACD97284587160054203D /* StocksResponse.swift in Sources */,
 				004ACD7528442E640054203D /* HttpMethod.swift in Sources */,
 				004ACD7C284433F70054203D /* NetworkService.swift in Sources */,
 				004ACD7328442E030054203D /* NetworkError.swift in Sources */,
@@ -376,7 +516,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M6D747999J;
-				INFOPLIST_FILE = StocksApp/Info.plist;
+				INFOPLIST_FILE = StocksApp/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -395,7 +535,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M6D747999J;
-				INFOPLIST_FILE = StocksApp/Info.plist;
+				INFOPLIST_FILE = StocksApp/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
