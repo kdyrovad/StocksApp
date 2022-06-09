@@ -9,9 +9,9 @@ import UIKit
 
 final class FavoritesVC: UIViewController {
     
-    private let presenter: StocksPresenterProtocol
+    private let presenter: FavoritesPresenterProtocol
     
-    init(presenter: StocksPresenterProtocol) {
+    init(presenter: FavoritesPresenterProtocol) {
         self.presenter = presenter
         
         super.init(nibName: nil, bundle: nil)
@@ -26,29 +26,26 @@ final class FavoritesVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StockCell.self, forCellReuseIdentifier: StockCell.typeName)
         tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = true
         return tableView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Favourite"
-        updateView()
+        presenter.loadView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        updateView()
-        
-        navigationController?.navigationBar.isHidden = false
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.allowsSelection = true
+        tableView.reloadData()
+    
         setUpView()
         setUpSubviews()
         
-        //presenter.loadView()
+//        presenter.loadView()
     }
     
     private func setUpView() {
@@ -56,7 +53,6 @@ final class FavoritesVC: UIViewController {
         navigationItem.title = "Favourite"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        print("SETUPVIEW")
     }
     
     private func setUpSubviews() {
@@ -75,25 +71,30 @@ extension FavoritesVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as! StockCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as? StockCell else {
+            return UITableViewCell()
+        }
         cell.backgroundColor = (indexPath.section % 2 == 0) ? UIColor(hexString: "#F0F4F7") : .white
         cell.layer.cornerRadius = 12
         cell.selectionStyle = .none
         
-        cell.configure(with: presenter.modelForFavorites(for: indexPath))
+        cell.configure(with: presenter.model(for: indexPath))
         
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter.favoriteItemsCount
+        return presenter.itemsCount
     }
 }
 
 extension FavoritesVC: StocksViewProtocol {
     func updateView() {
-        //presenter.updateStocksArray()
         tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 68
     }
     
     func updateCell(for indexPath: IndexPath) {
@@ -101,7 +102,7 @@ extension FavoritesVC: StocksViewProtocol {
     }
     
     func updateView(withLoader isLoading: Bool) {
-        print("Loader is - stocks ", isLoading, " at ", Date())
+        print("Loader is - ", isLoading, " at ", Date())
     }
     
     func updateView(withError message: String) {
@@ -119,6 +120,11 @@ extension FavoritesVC: UITableViewDelegate {
      
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 8
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = Main.shared.detailVC(for: presenter.model(for: indexPath))
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

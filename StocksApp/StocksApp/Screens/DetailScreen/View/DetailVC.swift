@@ -21,16 +21,21 @@ final class DetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    var bigTitle: String = ""
-//    var littleTitle: String = ""
-//    var price: String = ""
-//    var change: String = ""
-//    var isFav: Bool = false
+    override var hidesBottomBarWhenPushed: Bool {
+        get { true }
+        set { super.hidesBottomBarWhenPushed = newValue }
+    }
+    
+    private lazy var chartsContainerView: ChartsContainerView = {
+        let view = ChartsContainerView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private lazy var symbolLabel: UILabel = {
         let label = UILabel()
         label.text = presenter.bigTitle
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,7 +43,7 @@ final class DetailVC: UIViewController {
     private lazy var companyLabel: UILabel = {
         let label = UILabel()
         label.text = presenter.littleTitle
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -47,7 +52,7 @@ final class DetailVC: UIViewController {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.text = presenter.price
-        label.font = UIFont.boldSystemFont(ofSize: 28)
+        label.font = UIFont(name: "Montserrat-Bold", size: 28)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,7 +60,7 @@ final class DetailVC: UIViewController {
     private lazy var changeLabel: UILabel = {
         let label = UILabel()
         label.text = presenter.change
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.textColor = UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -83,10 +88,15 @@ final class DetailVC: UIViewController {
         return button
     }()
     
-    private lazy var chartView: UIView = {
-        let chart = UIView()
-        chart.translatesAutoresizingMaskIntoConstraints = false
-        return chart
+    private lazy var buyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Buy \(presenter.price ?? "")", for: .normal)
+        button.backgroundColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 16
+        button.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 16)
+        
+        return button
     }()
     
     
@@ -113,39 +123,43 @@ final class DetailVC: UIViewController {
     private func setUpViews() {
         view.addSubview(priceLabel)
         view.addSubview(changeLabel)
-        view.addSubview(chartView)
+        view.addSubview(chartsContainerView)
+        view.addSubview(buyButton)
         
         priceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 162).isActive = true
         priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         priceLabel.bottomAnchor.constraint(equalTo: changeLabel.topAnchor, constant: -8).isActive = true
         
         changeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        changeLabel.bottomAnchor.constraint(equalTo: chartView.topAnchor, constant: -30).isActive = true
+        changeLabel.bottomAnchor.constraint(equalTo: chartsContainerView.topAnchor, constant: -30).isActive = true
         
-        chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        chartView.heightAnchor.constraint(equalToConstant: 260).isActive = true
+//        chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        chartView.heightAnchor.constraint(equalToConstant: 260).isActive = true
+        
+        chartsContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        chartsContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        chartsContainerView.topAnchor.constraint(equalTo: changeLabel.bottomAnchor, constant: 100).isActive = true
+        
+        buyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        buyButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
     }
     
     @objc private func favButtonTap(sender: UIButton) {
-//        if isFav {
-//            Main.shared.favoritesService.delete(id: bigTitle.lowercased())
-//        } else {
-//            Main.shared.favoritesService.save(id: bigTitle.lowercased())
-//        }
-//        favoriteButton.isSelected.toggle()
-//        isFav.toggle()
         sender.isSelected.toggle()
         presenter.favoriteButtonTapped()
     }
 }
 
 extension DetailVC: DetailViewProtocol {
-    func updateView() {
-        chartView.backgroundColor = UIColor(hexString: "#F0F4F7")
+    func updateView(with model: ChartsModel) {
+        chartsContainerView.configure(with: model)
     }
     
     func updateView(withLoader isLoading: Bool) {
+        chartsContainerView.configure(with: isLoading)
         print("Loader is - detail ", isLoading, " at ", Date())
     }
     

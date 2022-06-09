@@ -16,6 +16,7 @@ final class Main {
     }()
     
     let favoritesService: FavoritesServiceProtocol = FavoritesLocalService()
+    private lazy var chartsService: ChartsServiceProtocol = ChartsService(network: network)
     
     static let shared: Main = .init()
     
@@ -36,7 +37,7 @@ final class Main {
     }
     
     func secondVC() -> UIViewController {
-        let presenter = StocksPresenter(service: stocksService())
+        let presenter = FavoritesPresenter(service: stocksService())
         let view = FavoritesVC(presenter: presenter)
         presenter.view = view as StocksViewProtocol
         
@@ -44,7 +45,11 @@ final class Main {
     }
     
     func thirdVC() -> UIViewController {
-        UIViewController()
+        let presneter = SearchPresenter(service: stocksService())
+        let view = SearchVC(presenter: presneter)
+        presneter.view = view
+        
+        return view
     }
     
     func tabbarController() -> UIViewController {
@@ -52,12 +57,11 @@ final class Main {
         
         let stocksVC = UINavigationController(rootViewController: self.stocksVC())
         stocksVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "diagram"), tag: 0)
-        //stocksVC.tabBarItem.title = ""
         
         let secondVC = UINavigationController(rootViewController: self.secondVC())
         secondVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "fav"), tag: 1)
         
-        let thirdVC = thirdVC()
+        let thirdVC = UINavigationController(rootViewController: self.thirdVC())
         thirdVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "search"), tag: 2)
         
         tabbar.viewControllers = [stocksVC, secondVC, thirdVC]
@@ -66,7 +70,7 @@ final class Main {
     }
     
     func detailVC(for model: StockModelProtocol) -> UIViewController {
-        let presenter = DetailPresenter(service: stocksService(), model: model)
+        let presenter = DetailPresenter(service: chartsService, model: model)
         let detailVC = DetailVC(presenter: presenter)
         presenter.view = detailVC
         

@@ -21,7 +21,6 @@ protocol FavoritesPresenterProtocol {
     
     func loadView()
     func model(for indexPath: IndexPath) -> StockModelProtocol
-    func updateStocksArray()
 }
 
 final class FavoritesPresenter: FavoritesPresenterProtocol {
@@ -34,46 +33,26 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
     
     init(service: StocksServiceProtocol) {
         self.service = service
+        startFavoritesNotificationObserving()
     }
     
     weak var view: StocksViewProtocol?
     
     func loadView() {
-        startFavoritesNotificationObserving()
-        
         view?.updateView(withLoader: true)
         
-        stocks = service.getStocks(view: view)
-        
-//        view?.updateView(withLoader: true)
-//        service.getStocks { [weak self] result in
-//            self?.view?.updateView(withLoader: false)
-//
-//            switch result {
-//            case .success(let stocks):
-//                self?.stocks = stocks.map { StockModel(stock: $0) }
-//                self?.view?.updateView()
-//            case .failure(let error):
-//                self?.view?.updateView(withError: error.localizedDescription)
-//            }
-//        }
+        service.getStocks { [weak self] result in
+            self?.view?.updateView(withLoader: false)
+            
+            switch result {
+            case .success(let stocks):
+                self?.stocks = stocks.filter{ $0.isFav }
+                self?.view?.updateView()
+            case .failure(let error):
+                self?.view?.updateView(withError: error.localizedDescription)
+            }
+        }
     }
-    
-    func setStocks(stocks: [StockModelProtocol]) {
-        self.stocks = stocks
-    }
-    
-    func getStocks() -> [StockModelProtocol] {
-        return self.stocks
-    }
-    
-    func updateStocksArray() {
-        setStocks(stocks: getStocks().filter{ $0.isFav })
-    }
-    
-//    static func updateStocksArray() {
-//        FavoritesPresenter.stocks = FavoritesPresenter.stocks.filter { StockModel(stock: $0).isFav }.map { StockModel(stock: $0) }
-//    }
     
     func model(for indexPath: IndexPath) -> StockModelProtocol {
         stocks[indexPath.section]

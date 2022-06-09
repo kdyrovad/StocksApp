@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,11 +27,17 @@
 		004ACD95284586990054203D /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD94284586990054203D /* StockModel.swift */; };
 		004ACD97284587160054203D /* StocksResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD96284587160054203D /* StocksResponse.swift */; };
 		004ACD9E284651E70054203D /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACD9D284651E70054203D /* DetailPresenter.swift */; };
-		004ACDA12846B9720054203D /* DetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA02846B9720054203D /* DetailResponse.swift */; };
 		004ACDA42846DC490054203D /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA32846DC490054203D /* FavoritesService.swift */; };
 		004ACDA82846F6800054203D /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDA72846F6800054203D /* FavoritesVC.swift */; };
 		004ACDAF284D57520054203D /* FavoritesUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDAE284D57520054203D /* FavoritesUpdateService.swift */; };
 		004ACDB2284D57EE0054203D /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDB1284D57EE0054203D /* FavoritesPresenter.swift */; };
+		004ACDB5284FF7CC0054203D /* ChartsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDB4284FF7CC0054203D /* ChartsModel.swift */; };
+		004ACDB7284FFD4A0054203D /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDB6284FFD4A0054203D /* ChartsView.swift */; };
+		004ACDB9285008150054203D /* ChartsResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDB8285008150054203D /* ChartsResponce.swift */; };
+		004ACDBB285008520054203D /* ChartsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDBA285008520054203D /* ChartsService.swift */; };
+		004ACDBE2850166C0054203D /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 004ACDBD2850166C0054203D /* Charts */; };
+		004ACDC2285151DE0054203D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDC1285151DE0054203D /* SearchVC.swift */; };
+		004ACDC52851714D0054203D /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDC42851714D0054203D /* SearchPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,11 +63,16 @@
 		004ACD94284586990054203D /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		004ACD96284587160054203D /* StocksResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksResponse.swift; sourceTree = "<group>"; };
 		004ACD9D284651E70054203D /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
-		004ACDA02846B9720054203D /* DetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResponse.swift; sourceTree = "<group>"; };
 		004ACDA32846DC490054203D /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		004ACDA72846F6800054203D /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 		004ACDAE284D57520054203D /* FavoritesUpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesUpdateService.swift; sourceTree = "<group>"; };
 		004ACDB1284D57EE0054203D /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
+		004ACDB4284FF7CC0054203D /* ChartsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsModel.swift; sourceTree = "<group>"; };
+		004ACDB6284FFD4A0054203D /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		004ACDB8285008150054203D /* ChartsResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsResponce.swift; sourceTree = "<group>"; };
+		004ACDBA285008520054203D /* ChartsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsService.swift; sourceTree = "<group>"; };
+		004ACDC1285151DE0054203D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		004ACDC42851714D0054203D /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004ACDBE2850166C0054203D /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +116,7 @@
 		004ACD68284428AB0054203D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				004ACDBF285151C00054203D /* SearchScreen */,
 				004ACDA52846F66B0054203D /* FavoritesScreen */,
 				004ACD9828459C740054203D /* DetailScreen */,
 				004ACD69284428B90054203D /* StocksScreen */,
@@ -235,6 +248,7 @@
 		004ACD9828459C740054203D /* DetailScreen */ = {
 			isa = PBXGroup;
 			children = (
+				004ACDB3284FF77C0054203D /* Model */,
 				004ACD9F2846B9610054203D /* Service */,
 				004ACD9A28459C950054203D /* Presenter */,
 				004ACD9928459C850054203D /* View */,
@@ -246,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				004ACD7F2844FE2E0054203D /* DetailVC.swift */,
+				004ACDB6284FFD4A0054203D /* ChartsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -261,7 +276,8 @@
 		004ACD9F2846B9610054203D /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				004ACDA02846B9720054203D /* DetailResponse.swift */,
+				004ACDB8285008150054203D /* ChartsResponce.swift */,
+				004ACDBA285008520054203D /* ChartsService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -300,6 +316,39 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		004ACDB3284FF77C0054203D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDB4284FF7CC0054203D /* ChartsModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		004ACDBF285151C00054203D /* SearchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDC32851713B0054203D /* Presenter */,
+				004ACDC0285151CA0054203D /* View */,
+			);
+			path = SearchScreen;
+			sourceTree = "<group>";
+		};
+		004ACDC0285151CA0054203D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDC1285151DE0054203D /* SearchVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		004ACDC32851713B0054203D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				004ACDC42851714D0054203D /* SearchPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,6 +365,9 @@
 			dependencies = (
 			);
 			name = StocksApp;
+			packageProductDependencies = (
+				004ACDBD2850166C0054203D /* Charts */,
+			);
 			productName = StocksApp;
 			productReference = 004ACD472842C6FD0054203D /* StocksApp.app */;
 			productType = "com.apple.product-type.application";
@@ -343,6 +395,9 @@
 				Base,
 			);
 			mainGroup = 004ACD3E2842C6FD0054203D;
+			packageReferences = (
+				004ACDBC2850166C0054203D /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 004ACD482842C6FD0054203D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -372,23 +427,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				004ACDA82846F6800054203D /* FavoritesVC.swift in Sources */,
+				004ACDC2285151DE0054203D /* SearchVC.swift in Sources */,
 				004ACD7E2844399A0054203D /* Main.swift in Sources */,
 				004ACD842845655A0054203D /* StocksPresenter.swift in Sources */,
+				004ACDB9285008150054203D /* ChartsResponce.swift in Sources */,
 				004ACD95284586990054203D /* StockModel.swift in Sources */,
 				004ACD7128442BDB0054203D /* Router.swift in Sources */,
 				004ACD4F2842C6FD0054203D /* StocksViewController.swift in Sources */,
 				004ACDAF284D57520054203D /* FavoritesUpdateService.swift in Sources */,
+				004ACDBB285008520054203D /* ChartsService.swift in Sources */,
 				004ACD4B2842C6FD0054203D /* AppDelegate.swift in Sources */,
 				004ACD93284586200054203D /* StocksRouter.swift in Sources */,
 				004ACD5F2842D0A10054203D /* StockCell.swift in Sources */,
-				004ACDA12846B9720054203D /* DetailResponse.swift in Sources */,
 				004ACDA42846DC490054203D /* FavoritesService.swift in Sources */,
+				004ACDB5284FF7CC0054203D /* ChartsModel.swift in Sources */,
 				004ACD802844FE2E0054203D /* DetailVC.swift in Sources */,
 				004ACD8A284574080054203D /* Extensions.swift in Sources */,
 				004ACD7A284430F90054203D /* StocksService.swift in Sources */,
+				004ACDB7284FFD4A0054203D /* ChartsView.swift in Sources */,
 				004ACD9E284651E70054203D /* DetailPresenter.swift in Sources */,
 				004ACD97284587160054203D /* StocksResponse.swift in Sources */,
 				004ACD7528442E640054203D /* HttpMethod.swift in Sources */,
+				004ACDC52851714D0054203D /* SearchPresenter.swift in Sources */,
 				004ACD7C284433F70054203D /* NetworkService.swift in Sources */,
 				004ACD7328442E030054203D /* NetworkError.swift in Sources */,
 				004ACDB2284D57EE0054203D /* FavoritesPresenter.swift in Sources */,
@@ -585,6 +645,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		004ACDBC2850166C0054203D /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		004ACDBD2850166C0054203D /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 004ACDBC2850166C0054203D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 004ACD3F2842C6FD0054203D /* Project object */;
 }

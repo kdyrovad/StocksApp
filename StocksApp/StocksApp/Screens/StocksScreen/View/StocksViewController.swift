@@ -35,6 +35,8 @@ final class StocksViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Stocks"
+        presenter.loadView()
+    
     }
 
     override func viewDidLoad() {
@@ -42,9 +44,6 @@ final class StocksViewController: UIViewController {
         
         setUpView()
         setUpSubviews()
-        
-        presenter.loadView()
-        print(presenter.itemsCount)
     }
     
     private func setUpView() {
@@ -62,7 +61,6 @@ final class StocksViewController: UIViewController {
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-
 }
 
 extension StocksViewController: StocksViewProtocol {
@@ -95,7 +93,6 @@ extension StocksViewController: UITableViewDataSource {
         cell.backgroundColor = (indexPath.section % 2 == 0) ? UIColor(hexString: "#F0F4F7") : .white
         cell.layer.cornerRadius = 16
         cell.selectionStyle = .none
-        print(presenter.itemsCount)
         cell.configure(with: presenter.model(for: indexPath))
         
         return cell
@@ -123,8 +120,7 @@ extension StocksViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = presenter.model(for: indexPath)
-        let vc = Main.shared.detailVC(for: model)
+        let vc = Main.shared.detailVC(for: presenter.model(for: indexPath))
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailViewProtocol: AnyObject {
-    func updateView()
+    func updateView(with model: ChartsModel)
     func updateView(withLoader isLoading: Bool)
     func updateView(withError message: String)
 }
@@ -48,9 +48,9 @@ final class DetailPresenter: DetailPresenterProtocol {
         return model.change
     }
     
-    private let service: StocksServiceProtocol
+    private let service: ChartsServiceProtocol
     
-    init(service: StocksServiceProtocol, model: StockModelProtocol) {
+    init(service: ChartsServiceProtocol, model: StockModelProtocol) {
         self.service = service
         self.model = model
     }
@@ -64,11 +64,12 @@ final class DetailPresenter: DetailPresenterProtocol {
     func loadView() {
         view?.updateView(withLoader: true)
         
-        service.getChart(id: model.id, carrency: "usd", days: "100", interval: "daily") { [weak self] result in
+        service.getCharts(id: model.id) { [weak self] result in
             self?.view?.updateView(withLoader: false)
             switch result {
-            case .success(_):
-                self?.view?.updateView()
+            case .success(let charts):
+                self?.view?.updateView(with: .build(from: charts))
+                print("RESULT: \(charts.prices)")
             case .failure(let error):
                 self?.view?.updateView(withError: error.localizedDescription)
             }
