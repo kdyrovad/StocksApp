@@ -20,12 +20,12 @@ final class ChartsService: ChartsServiceProtocol {
     }
     
     func getCharts(id: String, currency: String, days: String, interval: String, completion: @escaping (Result<Charts, NetworkError>) -> Void) {
-        network.execute(with: StocksRouter.charts(carrency: currency, days: days, interval: interval, id: id), completion: completion)
+        network.execute(with: StocksRouter.charts(id: id, carrency: currency, days: days, interval: interval), completion: completion)
     }
 }
 
 extension ChartsServiceProtocol {
     func getCharts(id: String, completion: @escaping (Result<Charts, NetworkError>) -> Void) {
-        getCharts(id: id, currency: "usd", days: "100", interval: "daily", completion: completion)
+        getCharts(id: id, currency: "usd", days: "360", interval: "daily", completion: completion)
     }
 }

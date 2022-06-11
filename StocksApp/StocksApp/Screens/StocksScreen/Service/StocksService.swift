@@ -16,10 +16,6 @@ protocol StocksServiceProtocol {
     func getStocks(currency: String, count: String, completion: @escaping (Result<[StockModelProtocol], NetworkError>) -> Void)
     func getStocks(currency: String, completion: @escaping (Result<[StockModelProtocol], NetworkError>) -> Void)
     func getStocks(completion: @escaping (Result<[StockModelProtocol], NetworkError>) -> Void)
-    
-//    func getChart(id: String, carrency: String, days: String, interval: String, completion: @escaping (Result<Chart, NetworkError>) -> Void)
-//    func getChart(carrency: String, completion: @escaping (Result<Chart, NetworkError>) -> Void)
-//    func getChart(completion: @escaping (Result<Chart, NetworkError>) -> Void)
 }
 
 final class StocksService: StocksServiceProtocol {
@@ -56,10 +52,6 @@ final class StocksService: StocksServiceProtocol {
     private func stockModels(for stocks: [Stock]) -> [StockModelProtocol] {
         stocks.map { StockModel(stock: $0) }
     }
-    
-//    func getChart(id: String, carrency: String, days: String, interval: String, completion: @escaping (Result<Chart, NetworkError>) -> Void) {
-//        client.execute(with: StocksRouter.charts(carrency: carrency, days: days, interval: interval, id: id), completion: completion)
-//    }
 }
 
 extension StocksServiceProtocol {
@@ -70,12 +62,4 @@ extension StocksServiceProtocol {
     func getStocks(completion: @escaping (Result<[StockModelProtocol], NetworkError>) -> Void) {
         getStocks(currency: Constants.currency, completion: completion)
     }
-    
-//    func getChart(carrency: String, completion: @escaping (Result<Chart, NetworkError>) -> Void) {
-//        getChart(id: "", carrency: carrency, days: "60", interval: "daily", completion: completion)
-//    }
-//    
-//    func getChart(completion: @escaping (Result<Chart, NetworkError>) -> Void) {
-//        getChart(carrency: "usd", completion: completion)
-//    }
 }

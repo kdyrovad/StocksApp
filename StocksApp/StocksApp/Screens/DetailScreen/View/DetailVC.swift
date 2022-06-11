@@ -61,7 +61,7 @@ final class DetailVC: UIViewController {
         let label = UILabel()
         label.text = presenter.change
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
-        label.textColor = UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
+        label.textColor = presenter.changeColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -132,10 +132,6 @@ final class DetailVC: UIViewController {
         
         changeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         changeLabel.bottomAnchor.constraint(equalTo: chartsContainerView.topAnchor, constant: -30).isActive = true
-        
-//        chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        chartView.heightAnchor.constraint(equalToConstant: 260).isActive = true
         
         chartsContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         chartsContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

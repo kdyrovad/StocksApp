@@ -44,8 +44,6 @@ final class FavoritesVC: UIViewController {
     
         setUpView()
         setUpSubviews()
-        
-//        presenter.loadView()
     }
     
     private func setUpView() {

@@ -94,8 +94,6 @@ final class SearchVC: UIViewController, UISearchBarDelegate {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         tableView.topAnchor.constraint(equalTo: stocksLabel.bottomAnchor, constant: 15).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-//        stocksLabel.isHidden = presenter.searchItemsCount == 0 ? true : false
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

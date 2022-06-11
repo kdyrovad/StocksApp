@@ -7,14 +7,6 @@
 
 import Foundation
 
-//protocol StocksViewProtocol: AnyObject {
-//    func updateView()
-//    func updateView(withLoader isLoading: Bool)
-//    func updateView(withError message: String)
-//    func updateCell(for indexPath: IndexPath)
-//    //func updateStocksArray()
-//}
-
 protocol FavoritesPresenterProtocol {
     var view: StocksViewProtocol? { get set }
     var itemsCount: Int { get }

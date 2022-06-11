@@ -46,7 +46,6 @@ final class FavoritesService: FavoritesServiceProtocol {
             return
         }
         UserDefaults.standard.setValue(data, forKey: key)
-        print("updated")
     }
 }
 
@@ -68,14 +67,12 @@ final class FavoritesLocalService: FavoritesServiceProtocol {
     func save(id: String) {
         favoritesIds.append(id)
         updateRepo(with: id)
-        print("\(id) WAS SAVED")
     }
     
     func delete(id: String) {
         if let index = favoritesIds.firstIndex(where: { $0 == id }) {
             favoritesIds.remove(at: index)
             updateRepo(with: id)
-            print("\(id) WAS DELETED")
         }
     }
     

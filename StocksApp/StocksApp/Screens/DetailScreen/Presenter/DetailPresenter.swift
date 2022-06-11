@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DetailViewProtocol: AnyObject {
     func updateView(with model: ChartsModel)
@@ -20,6 +21,7 @@ protocol DetailPresenterProtocol {
     var bigTitle: String? { get }
     var littleTitle: String? { get }
     var change: String? { get }
+    var changeColor: UIColor? { get }
     
     func loadView()
     func favoriteButtonTapped()
@@ -28,6 +30,7 @@ protocol DetailPresenterProtocol {
 final class DetailPresenter: DetailPresenterProtocol {
     
     private let model: StockModelProtocol
+    private let service: ChartsServiceProtocol
     
     var favoriteButtonIsClicked: Bool {
         return model.isFav
@@ -48,7 +51,9 @@ final class DetailPresenter: DetailPresenterProtocol {
         return model.change
     }
     
-    private let service: ChartsServiceProtocol
+    var changeColor: UIColor? {
+        return  (model.change.range(of: "-") != nil) ? UIColor(red: 178/255, green: 36/255, blue: 93/255, alpha: 1) : UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
+    }
     
     init(service: ChartsServiceProtocol, model: StockModelProtocol) {
         self.service = service
@@ -69,21 +74,10 @@ final class DetailPresenter: DetailPresenterProtocol {
             switch result {
             case .success(let charts):
                 self?.view?.updateView(with: .build(from: charts))
-                print("RESULT: \(charts.prices)")
             case .failure(let error):
                 self?.view?.updateView(withError: error.localizedDescription)
             }
         }
-        
-//        service.getChart { [weak self] result in
-//            self?.view?.updateView(withLoader: false)
-//            switch result {
-//            case .success(_):
-//                self?.view?.updateView()
-//            case .failure(let error):
-//                self?.view?.updateView(withError: error.localizedDescription)
-//            }
-//        }
     }
 }
 
