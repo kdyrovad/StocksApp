@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class StockCell: UITableViewCell {
     
@@ -13,11 +14,19 @@ final class StockCell: UITableViewCell {
     
     //MARK: - Views
     
+    private lazy var totalView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 16
+        view.backgroundColor = .blue
+        view.isUserInteractionEnabled = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var iconView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "Logo")
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
         return image
@@ -26,14 +35,12 @@ final class StockCell: UITableViewCell {
     private lazy var symbolLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Bold", size: 18)
-        label.text = "YNDX"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var companyLabel: UILabel = {
         let label = UILabel()
-        label.text = "Yandex, LLC"
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -41,7 +48,6 @@ final class StockCell: UITableViewCell {
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "4 764,6 ₽"
         label.font = UIFont(name: "Montserrat-Bold", size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -49,7 +55,6 @@ final class StockCell: UITableViewCell {
     
     private lazy var changeLabel: UILabel = {
         let label = UILabel()
-        label.text = "+55 ₽ (1,15%)"
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.textColor = UIColor.StockCell.changeLabelTextColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -58,6 +63,7 @@ final class StockCell: UITableViewCell {
     
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
+        button.contentMode = .scaleAspectFit
         button.setImage(UIImage(named: "favorite-off"), for: .normal)
         button.setImage(UIImage(named: "favSelected"), for: .selected)
         button.addTarget(self, action: #selector(favButtonTap), for: .touchUpInside)
@@ -68,6 +74,7 @@ final class StockCell: UITableViewCell {
     private let titleContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -81,6 +88,7 @@ final class StockCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.isUserInteractionEnabled = true
         setupContentView()
     }
     
@@ -96,7 +104,6 @@ final class StockCell: UITableViewCell {
     
     //MARK: - Methods
     
-    
     @objc private func favButtonTap() {
         favoriteButton.isSelected.toggle()
         favoriteAction?()
@@ -108,40 +115,59 @@ final class StockCell: UITableViewCell {
         priceLabel.text = model.price
         changeLabel.text = model.change
         changeLabel.textColor = model.changeColor
-        iconView.downloaded(from: model.iconURL)
+        iconView.setImage(from: model.iconURL, placeHolder: UIImage(named: "YNDX"))
         favoriteButton.isSelected = model.isFav
         
         favoriteAction = {
             model.setFavorite()
         }
-        
+    }
+    
+    func setBackgroundColor(for row: Int) {
+        totalView.backgroundColor = (row % 2 == 0) ? UIColor(hexString: "#F0F4F7") : .white
+    }
+    
+    private func setUpViews() {
+        setupContentView()
+        setupTitleContainerView()
+        setupPriceContainerView()
     }
     
     private func setupContentView() {
-        contentView.addSubview(iconView)
-        contentView.addSubview(titleContainerView)
-        contentView.addSubview(priceContainerView)
+        contentView.addSubview(totalView)
         
-        iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
-        iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        totalView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        totalView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        totalView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        totalView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
+
+        setupTotalView()
+        setupTitleContainerView()
+        setupPriceContainerView()
+    }
+    
+    private func setupTotalView() {
+        [iconView, titleContainerView, priceContainerView].forEach {
+            totalView.addSubview($0)
+        }
+        
+        iconView.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 8).isActive = true
+        iconView.topAnchor.constraint(equalTo: totalView.topAnchor, constant: 8).isActive = true
+        iconView.bottomAnchor.constraint(equalTo: totalView.bottomAnchor, constant: -8).isActive = true
         iconView.heightAnchor.constraint(equalToConstant: 52).isActive = true
         iconView.widthAnchor.constraint(equalToConstant: 52).isActive = true
         
         titleContainerView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12).isActive = true
         titleContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
-        titleContainerView.trailingAnchor.constraint(lessThanOrEqualTo: priceContainerView.leadingAnchor, constant: -20).isActive = true
         
-        priceContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
+        priceContainerView.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -12).isActive = true
         priceContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
-        
-        setupTitleContainerView()
-        setupPriceContainerView()
     }
     
     private func setupTitleContainerView() {
-        titleContainerView.addSubview(symbolLabel)
-        titleContainerView.addSubview(companyLabel)
-        titleContainerView.addSubview(favoriteButton)
+        [symbolLabel, companyLabel, favoriteButton].forEach {
+            titleContainerView.addSubview($0)
+        }
         
         symbolLabel.leadingAnchor.constraint(equalTo: titleContainerView.leadingAnchor).isActive = true
         symbolLabel.topAnchor.constraint(equalTo: titleContainerView.topAnchor).isActive = true
@@ -159,8 +185,9 @@ final class StockCell: UITableViewCell {
     }
     
     private func setupPriceContainerView() {
-        priceContainerView.addSubview(priceLabel)
-        priceContainerView.addSubview(changeLabel)
+        [priceLabel, changeLabel].forEach {
+            priceContainerView.addSubview($0)
+        }
 
         priceLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor).isActive = true
         priceLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor).isActive = true
@@ -174,31 +201,18 @@ final class StockCell: UITableViewCell {
     
 }
 
-extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
-    }
-}
-
 extension UIColor {
     fileprivate enum StockCell {
         static var changeLabelTextColor: UIColor {
             UIColor(red: 36/255, green: 178/255, blue: 93/255, alpha: 1)
         }
+    }
+}
+
+extension UIImageView {
+    func setImage(from source: String?, placeHolder: UIImage?) {
+        guard let urlString = source, let url = URL(string: urlString) else { return }
+
+        kf.setImage(with: .network(url), placeholder: placeHolder)
     }
 }

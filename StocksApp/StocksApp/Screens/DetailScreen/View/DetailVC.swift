@@ -121,10 +121,9 @@ final class DetailVC: UIViewController {
     }
     
     private func setUpViews() {
-        view.addSubview(priceLabel)
-        view.addSubview(changeLabel)
-        view.addSubview(chartsContainerView)
-        view.addSubview(buyButton)
+        [priceLabel, changeLabel, chartsContainerView, buyButton].forEach {
+            view.addSubview($0)
+        }
         
         priceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 162).isActive = true
         priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

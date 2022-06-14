@@ -35,6 +35,9 @@ final class FavoritesVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Favourite"
+        self.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
         presenter.loadView()
     }
     
@@ -48,9 +51,6 @@ final class FavoritesVC: UIViewController {
     
     private func setUpView() {
         view.backgroundColor = .white
-        navigationItem.title = "Favourite"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func setUpSubviews() {
@@ -65,24 +65,20 @@ final class FavoritesVC: UIViewController {
 
 extension FavoritesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return presenter.itemsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as? StockCell else {
             return UITableViewCell()
         }
-        cell.backgroundColor = (indexPath.section % 2 == 0) ? UIColor(hexString: "#F0F4F7") : .white
         cell.layer.cornerRadius = 12
         cell.selectionStyle = .none
+        cell.setBackgroundColor(for: indexPath.row)
         
         cell.configure(with: presenter.model(for: indexPath))
         
         return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter.itemsCount
     }
 }
 
@@ -109,17 +105,6 @@ extension FavoritesVC: StocksViewProtocol {
 }
 
 extension FavoritesVC: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = view.backgroundColor
-        return headerView
-    }
-     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = Main.shared.detailVC(for: presenter.model(for: indexPath))
         self.navigationController?.pushViewController(vc, animated: true)

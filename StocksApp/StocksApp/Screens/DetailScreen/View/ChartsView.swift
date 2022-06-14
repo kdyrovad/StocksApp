@@ -70,9 +70,9 @@ final class ChartsContainerView: UIView {
     }
     
     private func setupSubviews() {
-        addSubview(chartsView)
-        addSubview(buttonsStackView)
-        addSubview(loader)
+        [chartsView, buttonsStackView, loader].forEach {
+            addSubview($0)
+        }
         
         chartsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         chartsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -138,7 +138,6 @@ final class ChartsContainerView: UIView {
     
     private func setCharts1(with model: ChartsModel, i: Int) {
         guard model.periods[i].prices.count > i else {
-            print("it's empty")
             return
         }
 
@@ -158,8 +157,6 @@ final class ChartsContainerView: UIView {
         chartsView.data = LineChartData(dataSets: [lineDataSet])
         chartsView.animate(xAxisDuration: 0.3, yAxisDuration: 0.2)
     }
-
-
     
     @objc private func buttonTapped(sender: UIButton) {
         buttonsArray.forEach {

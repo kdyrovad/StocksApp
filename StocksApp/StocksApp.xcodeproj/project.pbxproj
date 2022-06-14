@@ -38,6 +38,7 @@
 		004ACDBE2850166C0054203D /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 004ACDBD2850166C0054203D /* Charts */; };
 		004ACDC2285151DE0054203D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDC1285151DE0054203D /* SearchVC.swift */; };
 		004ACDC52851714D0054203D /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004ACDC42851714D0054203D /* SearchPresenter.swift */; };
+		004ACDC82857A2FB0054203D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 004ACDC72857A2FB0054203D /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004ACDC82857A2FB0054203D /* Kingfisher in Frameworks */,
 				004ACDBE2850166C0054203D /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +369,7 @@
 			name = StocksApp;
 			packageProductDependencies = (
 				004ACDBD2850166C0054203D /* Charts */,
+				004ACDC72857A2FB0054203D /* Kingfisher */,
 			);
 			productName = StocksApp;
 			productReference = 004ACD472842C6FD0054203D /* StocksApp.app */;
@@ -397,6 +400,7 @@
 			mainGroup = 004ACD3E2842C6FD0054203D;
 			packageReferences = (
 				004ACDBC2850166C0054203D /* XCRemoteSwiftPackageReference "Charts" */,
+				004ACDC62857A2FA0054203D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 004ACD482842C6FD0054203D /* Products */;
 			projectDirPath = "";
@@ -655,6 +659,14 @@
 				minimumVersion = 4.0.3;
 			};
 		};
+		004ACDC62857A2FA0054203D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -662,6 +674,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 004ACDBC2850166C0054203D /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = Charts;
+		};
+		004ACDC72857A2FB0054203D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 004ACDC62857A2FA0054203D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

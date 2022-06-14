@@ -50,7 +50,7 @@ final class SearchPresenter: SearchPresenterProtocol {
     }
 
     func modelSearch(for indexPath: IndexPath, text: String) -> StockModelProtocol {
-        return stocks.filter{ $0.name.starts(with: text) }[indexPath.section]
+        return stocks.filter{ $0.name.starts(with: text) }[indexPath.row]
     }
 }
 

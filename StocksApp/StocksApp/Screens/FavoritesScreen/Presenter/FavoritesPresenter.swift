@@ -47,7 +47,7 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
     }
     
     func model(for indexPath: IndexPath) -> StockModelProtocol {
-        stocks[indexPath.section]
+        stocks[indexPath.row]
     }
 }
 
@@ -55,7 +55,7 @@ extension FavoritesPresenter: FavoritesUpdateServiceProtocol {
     func setFavorite(notification: Notification) {
         guard let id = notification.stockId,
               let index = stocks.firstIndex(where: { $0.id == id }) else { return }
-        let indexPath = IndexPath(row: 0, section: index)
+        let indexPath = IndexPath(row: index, section: 0)
         
         view?.updateCell(for: indexPath)
     }

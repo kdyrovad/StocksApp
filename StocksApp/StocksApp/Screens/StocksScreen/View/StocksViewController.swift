@@ -29,6 +29,7 @@ final class StocksViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsSelection = true
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -36,7 +37,6 @@ final class StocksViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Stocks"
         presenter.loadView()
-    
     }
 
     override func viewDidLoad() {
@@ -83,42 +83,23 @@ extension StocksViewController: StocksViewProtocol {
 
 extension StocksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return presenter.itemsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as? StockCell else {
             return UITableViewCell()
         }
-        cell.backgroundColor = (indexPath.section % 2 == 0) ? UIColor(hexString: "#F0F4F7") : .white
         cell.layer.cornerRadius = 16
         cell.selectionStyle = .none
         cell.configure(with: presenter.model(for: indexPath))
+        cell.setBackgroundColor(for: indexPath.row)
         
         return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter.itemsCount
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        68
     }
 }
 
 extension StocksViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = view.backgroundColor
-        return headerView
-    }
-     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = Main.shared.detailVC(for: presenter.model(for: indexPath))
         self.navigationController?.pushViewController(vc, animated: true)
