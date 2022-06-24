@@ -44,7 +44,7 @@ final class SearchPresenter: SearchPresenterProtocol {
             }
         }
     }
-    
+     
     func searchItemsCountChanged(text: String) {
         searchItemsCount = text.isEmpty ? 0 : stocks.filter{ $0.name.starts(with: text) }.count
     }

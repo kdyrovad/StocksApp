@@ -9,7 +9,7 @@ import Foundation
 
 fileprivate enum Constants {
     static let currency = "usd"
-    static let count = "100"
+    static let count = "25"
 }
 
 protocol StocksServiceProtocol {

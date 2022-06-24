@@ -36,7 +36,7 @@ final class StocksPresenter: StocksPresenterProtocol {
     }
     
     weak var view: StocksViewProtocol?
-    
+     
     func loadView() {
         view?.updateView(withLoader: true)
         
