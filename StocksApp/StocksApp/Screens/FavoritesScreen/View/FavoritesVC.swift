@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class FavoritesVC: UIViewController {
     
@@ -56,10 +57,12 @@ final class FavoritesVC: UIViewController {
     private func setUpSubviews() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top) // Вместо view.topAnchor используем safeAreaLayoutGuide
+            make.bottom.equalToSuperview()
+        }
     }
 }
 

@@ -136,10 +136,12 @@ final class StockCell: UITableViewCell {
     private func setupContentView() {
         contentView.addSubview(totalView)
         
-        totalView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        totalView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        totalView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        totalView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
+        totalView.snp.makeConstraints { make in
+            make.leading.equalTo(contentView)
+            make.trailing.equalTo(contentView)
+            make.top.equalTo(contentView)
+            make.bottom.equalTo(contentView).offset(-8)
+        }
 
         setupTotalView()
         setupTitleContainerView()
@@ -151,17 +153,23 @@ final class StockCell: UITableViewCell {
             totalView.addSubview($0)
         }
         
-        iconView.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 8).isActive = true
-        iconView.topAnchor.constraint(equalTo: totalView.topAnchor, constant: 8).isActive = true
-        iconView.bottomAnchor.constraint(equalTo: totalView.bottomAnchor, constant: -8).isActive = true
-        iconView.heightAnchor.constraint(equalToConstant: 52).isActive = true
-        iconView.widthAnchor.constraint(equalToConstant: 52).isActive = true
-        
-        titleContainerView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12).isActive = true
-        titleContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
-        
-        priceContainerView.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -12).isActive = true
-        priceContainerView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
+        iconView.snp.makeConstraints { make in
+            make.leading.equalTo(totalView).offset(8)
+            make.top.equalTo(totalView).offset(8)
+            make.bottom.equalTo(totalView).offset(-8)
+            make.height.equalTo(52)
+            make.width.equalTo(52)
+        }
+
+        titleContainerView.snp.makeConstraints { make in
+            make.leading.equalTo(iconView.snp.trailing).offset(12)
+            make.centerY.equalTo(iconView)
+        }
+
+        priceContainerView.snp.makeConstraints { make in
+            make.trailing.equalTo(totalView).offset(-12)
+            make.centerY.equalTo(iconView)
+        }
     }
     
     private func setupTitleContainerView() {
@@ -169,19 +177,25 @@ final class StockCell: UITableViewCell {
             titleContainerView.addSubview($0)
         }
         
-        symbolLabel.leadingAnchor.constraint(equalTo: titleContainerView.leadingAnchor).isActive = true
-        symbolLabel.topAnchor.constraint(equalTo: titleContainerView.topAnchor).isActive = true
-        
-        favoriteButton.leadingAnchor.constraint(equalTo: symbolLabel.trailingAnchor, constant: 6).isActive = true
-        favoriteButton.centerYAnchor.constraint(equalTo: symbolLabel.centerYAnchor).isActive = true
-        favoriteButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        favoriteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        favoriteButton.trailingAnchor.constraint(lessThanOrEqualTo: titleContainerView.trailingAnchor).isActive = true
-        
-        companyLabel.leadingAnchor.constraint(equalTo: symbolLabel.leadingAnchor).isActive = true
-        companyLabel.topAnchor.constraint(equalTo: symbolLabel.bottomAnchor).isActive = true
-        companyLabel.bottomAnchor.constraint(equalTo: titleContainerView.bottomAnchor).isActive = true
-        companyLabel.trailingAnchor.constraint(equalTo: titleContainerView.trailingAnchor).isActive = true
+        symbolLabel.snp.makeConstraints { make in
+            make.leading.equalTo(titleContainerView)
+            make.top.equalTo(titleContainerView)
+        }
+
+        favoriteButton.snp.makeConstraints { make in
+            make.leading.equalTo(symbolLabel.snp.trailing).offset(6)
+            make.centerY.equalTo(symbolLabel)
+            make.height.equalTo(16)
+            make.width.equalTo(16)
+            make.trailing.lessThanOrEqualTo(titleContainerView)
+        }
+
+        companyLabel.snp.makeConstraints { make in
+            make.leading.equalTo(symbolLabel)
+            make.top.equalTo(symbolLabel.snp.bottom)
+            make.bottom.equalTo(titleContainerView)
+            make.trailing.equalTo(titleContainerView)
+        }
     }
     
     private func setupPriceContainerView() {
@@ -189,14 +203,18 @@ final class StockCell: UITableViewCell {
             priceContainerView.addSubview($0)
         }
 
-        priceLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor).isActive = true
-        priceLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor).isActive = true
-        priceLabel.topAnchor.constraint(equalTo: priceContainerView.topAnchor).isActive = true
-        
-        changeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: priceContainerView.leadingAnchor).isActive = true
-        changeLabel.trailingAnchor.constraint(equalTo: priceContainerView.trailingAnchor).isActive = true
-        changeLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor).isActive = true
-        changeLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor).isActive = true
+        priceLabel.snp.makeConstraints { make in
+            make.leading.greaterThanOrEqualTo(priceContainerView)
+            make.trailing.equalTo(priceContainerView)
+            make.top.equalTo(priceContainerView)
+        }
+
+        changeLabel.snp.makeConstraints { make in
+            make.leading.greaterThanOrEqualTo(priceContainerView)
+            make.trailing.equalTo(priceContainerView)
+            make.top.equalTo(priceLabel.snp.bottom)
+            make.bottom.equalTo(priceContainerView)
+        }
     }
     
 }

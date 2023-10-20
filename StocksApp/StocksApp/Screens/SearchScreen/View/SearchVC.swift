@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class SearchVC: UIViewController, UISearchBarDelegate {
     
@@ -82,18 +83,24 @@ final class SearchVC: UIViewController, UISearchBarDelegate {
             view.addSubview($0)
         }
         
-        searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
-        
-        stocksLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        stocksLabel.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 25).isActive = true
-        stocksLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        tableView.topAnchor.constraint(equalTo: stocksLabel.bottomAnchor, constant: 15).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        searchBar.snp.makeConstraints { make in
+            make.leading.equalTo(view).offset(20)
+            make.trailing.equalTo(view).offset(-20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15)
+        }
+
+        stocksLabel.snp.makeConstraints { make in
+            make.leading.equalTo(view).offset(20)
+            make.top.equalTo(searchBar.snp.bottom).offset(25)
+            make.trailing.equalTo(view).offset(-20)
+        }
+
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(view).offset(16)
+            make.trailing.equalTo(view).offset(-16)
+            make.top.equalTo(stocksLabel.snp.bottom).offset(15)
+            make.bottom.equalTo(view)
+        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

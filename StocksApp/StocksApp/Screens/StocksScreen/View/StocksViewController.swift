@@ -56,10 +56,12 @@ final class StocksViewController: UIViewController {
     private func setUpSubviews() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(view).offset(16)
+            make.trailing.equalTo(view).offset(-16)
+            make.top.equalTo(view)
+            make.bottom.equalTo(view)
+        }
     }
 }
 

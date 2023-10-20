@@ -7,6 +7,7 @@
 
 import UIKit
 import Charts
+import SnapKit
 
 final class ChartsContainerView: UIView {
     struct Model {
@@ -74,18 +75,23 @@ final class ChartsContainerView: UIView {
             addSubview($0)
         }
         
-        chartsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        chartsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        chartsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        chartsView.heightAnchor.constraint(equalToConstant: 260).isActive = true
-        
-        buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        buttonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
-        buttonsStackView.topAnchor.constraint(equalTo: chartsView.bottomAnchor, constant: 40).isActive = true
-        buttonsStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
-        loader.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        loader.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        chartsView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.top.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(260)
+        }
+
+        buttonsStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(chartsView.snp.bottom).offset(40)
+            make.bottom.equalToSuperview()
+        }
+
+        loader.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func addButtons(for model: ChartsModel) {

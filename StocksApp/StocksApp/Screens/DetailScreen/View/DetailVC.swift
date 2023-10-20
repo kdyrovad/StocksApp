@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class DetailVC: UIViewController {
     
@@ -125,21 +126,29 @@ final class DetailVC: UIViewController {
             view.addSubview($0)
         }
         
-        priceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 162).isActive = true
-        priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        priceLabel.bottomAnchor.constraint(equalTo: changeLabel.topAnchor, constant: -8).isActive = true
-        
-        changeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        changeLabel.bottomAnchor.constraint(equalTo: chartsContainerView.topAnchor, constant: -30).isActive = true
-        
-        chartsContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        chartsContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        chartsContainerView.topAnchor.constraint(equalTo: changeLabel.bottomAnchor, constant: 100).isActive = true
-        
-        buyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-        buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        buyButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        priceLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top).offset(162)
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(changeLabel.snp.top).offset(-8)
+        }
+
+        changeLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(chartsContainerView.snp.top).offset(-30)
+        }
+
+        chartsContainerView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalTo(changeLabel.snp.bottom).offset(100)
+        }
+
+        buyButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.snp.bottom).offset(-20)
+            make.leading.equalTo(view.snp.leading).offset(16)
+            make.trailing.equalTo(view.snp.trailing).offset(-16)
+            make.height.equalTo(56)
+        }
     }
     
     @objc private func favButtonTap(sender: UIButton) {
